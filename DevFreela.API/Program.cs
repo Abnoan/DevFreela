@@ -1,10 +1,8 @@
-using DevFreela.Application.Services.Implementations;
-using DevFreela.Application.Services.Interfaces;
-using DevFreela.Infrastructure.Persistence;
+using DevFreela.Application;
+using DevFreela.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DevFreela.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,11 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var configuration = builder.Configuration;
 
-builder.Services.AddPersistence(configuration);
-
-builder.Services.AddScoped<IProjectService, ProjectService>();
-builder.Services.AddScoped<ISkillService, SkillService>();
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services
+        .AddPersistence(configuration)
+        .AddApplication(); 
 
 var app = builder.Build();
 
