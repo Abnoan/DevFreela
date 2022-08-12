@@ -3,6 +3,7 @@ using DevFreela.Application.Services.Interfaces;
 using DevFreela.Application.ViewModels;
 using DevFreela.Core.Entities;
 using DevFreela.Infrastructure.Persistence;
+using System.Linq;
 
 namespace DevFreela.Application.Services.Implementations
 {
@@ -19,6 +20,7 @@ namespace DevFreela.Application.Services.Implementations
             var user = new User(inputModel.FullName, inputModel.Email, inputModel.BirthDate);
 
             _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
 
             return user.Id;
         }
