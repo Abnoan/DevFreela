@@ -3,6 +3,9 @@ using DevFreela.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FluentValidation.AspNetCore;
+using System.Reflection;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +21,16 @@ var configuration = builder.Configuration;
 
 builder.Services
         .AddInfrastructure(configuration)
-        .AddApplication(); 
+        .AddApplication();
+
+//TODO - não está injetando.
+
+builder.Services.AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters()
+                .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+//builder.Services.AddControllers()
+
 
 var app = builder.Build();
 
