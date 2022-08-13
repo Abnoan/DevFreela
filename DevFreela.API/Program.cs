@@ -1,11 +1,12 @@
+using DevFreela.API.Filters;
 using DevFreela.Application;
 using DevFreela.Infrastructure;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using FluentValidation.AspNetCore;
 using System.Reflection;
-using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,9 +28,8 @@ builder.Services
 
 builder.Services.AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters()
-                .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
-//builder.Services.AddControllers()
+                .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
+                .AddControllers(opt => opt.Filters.Add(typeof(ValidationFilter)));
 
 
 var app = builder.Build();
