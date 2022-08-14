@@ -24,7 +24,8 @@ namespace DevFreela.Infrastructure
                 .AddPersistence(configuration)
                 .AddRepositories()
                 .AddJwtAuthentication(configuration)
-                .AddServices();
+                .AddServices()
+                .AddUnitOfWork();
               
 
             return services;
@@ -80,5 +81,11 @@ namespace DevFreela.Infrastructure
             return services;
         }
 
+        private static IServiceCollection AddUnitOfWork(this IServiceCollection services)
+        {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            return services;
+        }
     }
 }

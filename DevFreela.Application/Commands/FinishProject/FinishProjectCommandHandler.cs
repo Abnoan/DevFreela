@@ -18,7 +18,7 @@ namespace DevFreela.Application.Commands.FinishProject
         public async Task<bool> Handle(FinishProjectCommand request, CancellationToken cancellationToken)
         {
             var project = await _projectRepository.GetByIdAsync(request.Id);
-
+            
             var paymentInfoDto = new PaymentInfoDTO(request.Id, request.CreditCardNumber, request.Cvv, request.ExpiresAt, request.FullName, project.TotalCost);
 
             _paymentService.ProcessPayment(paymentInfoDto);

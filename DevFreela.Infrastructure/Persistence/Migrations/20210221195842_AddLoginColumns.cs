@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
 namespace DevFreela.Infrastructure.Persistence.Migrations
 {
     public partial class AddLoginColumns : Migration
@@ -12,15 +10,13 @@ namespace DevFreela.Infrastructure.Persistence.Migrations
                 name: "Password",
                 table: "Users",
                 type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "Role",
                 table: "Users",
                 type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
