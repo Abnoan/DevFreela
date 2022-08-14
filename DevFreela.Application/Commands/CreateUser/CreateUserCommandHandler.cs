@@ -7,13 +7,11 @@ using MediatR;
 namespace DevFreela.Application.Commands.CreateUser
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
-    {
-        private readonly DevFreelaDbContext _dbContext;
+    {      
         private readonly IAuthService _authService;
         private readonly IUserRepository _userRepository;
-        public CreateUserCommandHandler(DevFreelaDbContext dbContext, IAuthService authService, IUserRepository userRepository)
-        {
-            _dbContext = dbContext;
+        public CreateUserCommandHandler(IAuthService authService, IUserRepository userRepository)
+        {           
             _authService = authService;
             _userRepository = userRepository;
         }

@@ -1,6 +1,8 @@
 using DevFreela.Core.Repositories;
 using DevFreela.Core.Services;
 using DevFreela.Infrastructure.Auth;
+using DevFreela.Infrastructure.MessageBus;
+using DevFreela.Infrastructure.Payments;
 using DevFreela.Infrastructure.Persistence;
 using DevFreela.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,7 +23,8 @@ namespace DevFreela.Infrastructure
             services
                 .AddPersistence(configuration)
                 .AddRepositories()
-                .AddJwtAuthentication(configuration);
+                .AddJwtAuthentication(configuration)
+                .AddServices();
               
 
             return services;
@@ -67,6 +70,13 @@ namespace DevFreela.Infrastructure
 
             services.AddScoped<IAuthService, AuthService>();
 
+            return services;
+        }
+
+        private static IServiceCollection AddServices(this IServiceCollection services)
+        {
+            services.AddScoped<IMessageBusService, MessageBusService>();
+            services.AddScoped<IPaymentService, PaymentService>();
             return services;
         }
 

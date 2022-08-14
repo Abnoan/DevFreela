@@ -1,5 +1,6 @@
 using DevFreela.API.Filters;
 using DevFreela.Application;
+using DevFreela.Application.Consumers;
 using DevFreela.Infrastructure;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -15,7 +16,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters()
+                .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
+                .AddControllers(opt => opt.Filters.Add(typeof(ValidationFilter)));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -50,16 +54,11 @@ builder.Services.AddSwaggerGen(c =>
 
 var configuration = builder.Configuration;
 
+builder.Services.AddHostedService<PaymentApprovedConsumer>();
+
 builder.Services
         .AddInfrastructure(configuration)
         .AddApplication();
-
-//TODO - não está injetando.
-
-builder.Services.AddFluentValidationAutoValidation()
-                .AddFluentValidationClientsideAdapters()
-                .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
-                .AddControllers(opt => opt.Filters.Add(typeof(ValidationFilter)));
 
 
 var app = builder.Build();
