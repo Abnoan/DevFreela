@@ -1,9 +1,5 @@
 ﻿using DevFreela.Core.Entities;
 using DevFreela.Core.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
 
 namespace DevFreela.UnitTests.Core.Entities
 {
@@ -12,7 +8,7 @@ namespace DevFreela.UnitTests.Core.Entities
         [Fact]
         public void TestIfProjectStartWorks()
         {
-            var project = new Project("Nome De Teste", "Descricao de Teste", 1, 2, 10000);
+            var project = new Project("Fake Name", "Fake Description", 1, 2, 10000);
 
             Assert.Equal(ProjectStatusEnum.Created, project.Status);
             Assert.Null(project.StartedAt);

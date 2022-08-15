@@ -21,11 +21,7 @@ namespace DevFreela.Application.Commands.CreateProject
 
             await _unitOfWork.Projects.AddAsync(project);
 
-            await _unitOfWork.CompleteAsync();
-
-            await _unitOfWork.Skills.AddSkillFromProject(project);
-
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.CompleteAsync();         
 
             await _unitOfWork.CommitAsync();
 

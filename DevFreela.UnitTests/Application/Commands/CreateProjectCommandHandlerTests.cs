@@ -1,6 +1,6 @@
 ﻿using DevFreela.Application.Commands.CreateProject;
 using DevFreela.Core.Entities;
-using DevFreela.Core.Repositories;
+using DevFreela.Infrastructure.Persistence;
 using Moq;
 
 namespace DevFreela.UnitTests.Application.Commands
@@ -11,12 +11,12 @@ namespace DevFreela.UnitTests.Application.Commands
         public async Task InputDataIsOk_Executed_ReturnProjectId()
         {
             // Arrange
-            var projectRepository = new Mock<IProjectRepository>();
+            var projectRepository = new Mock<IUnitOfWork>();
 
             var createProjectCommand = new CreateProjectCommand
             {
-                Title = "Titulo de Teste",
-                Description = "Uma descrição Daora",
+                Title = "Fake Title",
+                Description = "Fake Description",
                 TotalCost = 50000,
                 IdClient = 1,
                 IdFreelancer = 2
@@ -30,7 +30,7 @@ namespace DevFreela.UnitTests.Application.Commands
             // Assert
             Assert.True(id >= 0);
 
-            projectRepository.Verify(pr => pr.AddAsync(It.IsAny<Project>()), Times.Once);
+            projectRepository.Verify(pr => pr.Projects.AddAsync(It.IsAny<Project>()), Times.Once);
         }
     }
 }
